@@ -1,0 +1,10 @@
+DGS004
+null 0 0
+an 0	label: 0
+an 1	label: 1
+an 2    label: 2
+an 3	label: 3
+ae e2	0 1
+ae e3	2 3
+ae e4   1 2
+ae e5   1 3
