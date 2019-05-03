@@ -1,121 +1,195 @@
 package eu.su.mas.dedaleEtu.mas.behaviours;
 
-import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
-
-import org.graphstream.graph.Node;
-
 import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
-import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
-import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation.MapAttribute;
-import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
-import jade.core.behaviours.TickerBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.UnreadableException;
 
-/**
- * This example behaviour try to send a hello message (every 3s maximum) to agents Collect2 Collect1
- * @author hc
- *
- */
+
 public class ReceiveBlock extends SimpleBehaviour{
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = -2058134622075555998L;
 
-	/**
-	 * An agent tries to contact its friend and to give him its current position
-	 * @param myagent the agent who posses the behaviour
-	 *  
-	 */
 	private String envoyeur = "";
 	private boolean finished = false;
-	private int exitValue = 1 ;
-	private String[] listePrio = {"Explo1","Explo2", "Explo3"};
+	private int exitValue;
+	private String[] listePrio = {"Explo1","Explo2", "Explo3","Collect1","Collect2","Collect3","Tanker1"};
 	
 	public ReceiveBlock (final Agent myagent) {
 		super(myagent);
-		
-		//super(myagent);
+
 	}
 
 	@Override
 	public void action() {
-		//on attend de recevoir un message
 		
-		final MessageTemplate msgTemplate = MessageTemplate.and(
-				MessageTemplate.MatchProtocol("BlockProtocol"),
+		final MessageTemplate msgTemplate_1 = MessageTemplate.and(
+				MessageTemplate.MatchProtocol("BlockProtocol_1"),
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );
-		final ACLMessage msg = this.myAgent.receive(msgTemplate);
+		final ACLMessage msg_1 = this.myAgent.receive(msgTemplate_1);
+		
+		final MessageTemplate msgTemplate_2 = MessageTemplate.and(
+				MessageTemplate.MatchProtocol("BlockProtocol_2"),
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );
+		final ACLMessage msg_2 = this.myAgent.receive(msgTemplate_2);
 
-		if (msg != null) {	
+		if (msg_1 != null) {	
 			
-			System.out.println("-----------------------------"+this.myAgent.getLocalName()+" receives blockage from "+msg.getSender().getLocalName());
 			try {
-				this.envoyeur = msg.getSender().getLocalName();
+				this.envoyeur = msg_1.getSender().getLocalName();
 				
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		
-			
+				
 			if((this.envoyeur).equals("Explo1")) {
-				String nextNode=null;
-
+				int i = 0;
+				while(i<5) {
 				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
 				Random rand = new Random(); 
 				int posAleat = rand.nextInt(lobs.size());
-				nextNode = lobs.get(posAleat).getLeft();
-				System.out.println("*********************On tente le Déblocage!************");
-				System.out.println("j'était à la position" + ((AbstractDedaleAgent)this.myAgent).getCurrentPosition());
+				String nextNode = lobs.get(posAleat).getLeft();
 				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				System.out.println("je bouge en " + nextNode);
+				i++;
+				}
 
 			}
 			else if((this.envoyeur).equals("Explo2")) {
-				String nextNode=null;
-
+				int i = 0;
+				while(i<7) {
 				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
 				Random rand = new Random(); 
 				int posAleat = rand.nextInt(lobs.size());
-				nextNode = lobs.get(posAleat).getLeft();
-				System.out.println("*********************On tente le Déblocage!************");
-				System.out.println("j'était à la position" + ((AbstractDedaleAgent)this.myAgent).getCurrentPosition());
+				String nextNode = lobs.get(posAleat).getLeft();
 				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				System.out.println("je bouge en " + nextNode);
+				i++;
+				}
 
 			}
-			
-			}
-		else {
-			System.out.println("message vide");
+			else if((this.envoyeur).equals("Explo3")) {
+				int i = 0;
+				while(i<10) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
 
+			}
+			else if((this.envoyeur).equals("Collect1")) {
+				int i = 0;
+				while(i<3) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			else if((this.envoyeur).equals("Collect2")) {
+				int i = 0;
+				while(i<3) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			exitValue = 1;
+			}
+
+		if (msg_2 != null) {	
 			
-		}
+			try {
+				this.envoyeur = msg_2.getSender().getLocalName();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+				
+			if((this.envoyeur).equals("Explo1")) {
+				int i = 0;
+				while(i<5) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			else if((this.envoyeur).equals("Explo2")) {
+				int i = 0;
+				while(i<7) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			else if((this.envoyeur).equals("Explo3")) {
+				int i = 0;
+				while(i<10) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			else if((this.envoyeur).equals("Collect1")) {
+				int i = 0;
+				while(i<3) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			else if((this.envoyeur).equals("Collect2")) {
+				int i = 0;
+				while(i<3) {
+				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+				Random rand = new Random(); 
+				int posAleat = rand.nextInt(lobs.size());
+				String nextNode = lobs.get(posAleat).getLeft();
+				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+				i++;
+				}
+
+			}
+			exitValue = 2;
+			}
 		finished = true;
 
 		}	
 		
-
-		
-	
 	public int onEnd(){return exitValue;}
 
 
 	@Override
 	public boolean done() {
-		// TODO Auto-generated method stub
 		return finished;
 	}
 }

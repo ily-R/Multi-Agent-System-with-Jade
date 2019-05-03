@@ -1,156 +1,140 @@
 package eu.su.mas.dedaleEtu.mas.behaviours;
 
-import java.io.IOException;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
-
-import org.graphstream.graph.EdgeRejectedException;
-
 import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
+import eu.su.mas.dedaleEtu.mas.agents.explot_collect_agent;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation.MapAttribute;
-import jade.core.AID;
-import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
-import jade.lang.acl.ACLMessage;
-import jade.lang.acl.MessageTemplate;
-import jade.lang.acl.UnreadableException;
 
 
-/**
- * This behaviour allows an agent to explore the environment and learn the associated topological map.
- * The algorithm is a pseudo - DFS computationally consuming because its not optimised at all.</br>
- * 
- * When all the nodes around him are visited, the agent randomly select an open node and go there to restart its dfs.</br> 
- * This (non optimal) behaviour is done until all nodes are explored. </br> 
- * 
- * Warning, this behaviour does not save the content of visited nodes, only the topology.</br> 
- * Warning, this behaviour is a solo exploration and does not take into account the presence of other agents (or well) and indefinitely tries to reach its target node
- * @author hc
- *
- */
+
 public class ExploDuoBehaviour extends SimpleBehaviour {
 
 	private static final long serialVersionUID = 8567689731496787661L;
 
 	private boolean finished = false;
-
-	/**
-	 * Current knowledge of the agent regarding the environment
-	 */
 	private MapRepresentation myMap;
-
-	/**
-	 * Nodes known but not yet visited
-	 */
 	private List<String> openNodes;
-	/**
-	 * Visited nodes
-	 */
-	private Set<String> closedNodes;
-	
-	private int exitValue = 1 ;
+	private Set<String> closedNodes;	
+	private List<Couple<String,List<Couple<Observation,Integer>>>> ListeTresor;
+	private int exitValue;
 
 
-	public ExploDuoBehaviour(final AbstractDedaleAgent myagent, MapRepresentation myMap) {
+	public ExploDuoBehaviour(final AbstractDedaleAgent myagent) {
 		super(myagent);
-		this.myMap=myMap;
+		this.myMap=  ((explot_collect_agent) this.myAgent).getMap();
+		this.ListeTresor = ((explot_collect_agent) this.myAgent).getListTresor();
 		this.openNodes=new ArrayList<String>();
 		this.closedNodes=new HashSet<String>();
 	}
 
+	
+	
 	@Override
 	public void action() {
-		this.exitValue = 1 ;
+		exitValue = 1 ;
 
-		//System.out.println(this.myAgent.getLocalName()+" essaie d'avance d'un pas");
 		if(this.myMap==null)
 			this.myMap= new MapRepresentation();
+		
+		if(this.ListeTresor==null)
+			this.ListeTresor= new ArrayList<Couple<String,List<Couple<Observation,Integer>>>>();
+		
 		try {
-		//0) Retrieve the current position
 		String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
 	
 		if (myPosition!=null){
-			//List of observable from the agent's current position
 			
-			List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();//myPosition
-
-			/**
-			 * Just added here to let you see what the agent is doing, otherwise he will be too quick
-			 */
+			List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+			
 			try {
 				this.myAgent.doWait(500);
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
 
-			//1) remove the current node from openlist and add it to closedNodes.
 			this.closedNodes.add(myPosition);
 			this.openNodes.remove(myPosition);
-
 			this.myMap.addNode(myPosition);
-
-			//2) get the surrounding nodes and, if not in closedNodes, add them to open nodes.
+			
 			String nextNode=null;
 			Iterator<Couple<String, List<Couple<Observation, Integer>>>> iter=lobs.iterator();
-			while(iter.hasNext()){
-				String nodeId=iter.next().getLeft();
+			
+			while(iter.hasNext()){				
+				Couple<String, List<Couple<Observation, Integer>>> node =iter.next();
+				String nodeId = node.getLeft();
+				
 				if (!this.closedNodes.contains(nodeId)){
+					
 					if (!this.openNodes.contains(nodeId)){
 						this.openNodes.add(nodeId);
 						this.myMap.addNode(nodeId, MapAttribute.open);
 						this.myMap.addEdge(myPosition, nodeId);	
-					}else{
-						//the node exist, but not necessarily the edge
+					}
+					else{
 						this.myMap.addEdge(myPosition, nodeId);
 					}
+					
 					if (nextNode==null) nextNode=nodeId;
+				}
+				
+				if(myPosition.equals(nodeId)) {
+					
+					try {
+					Observation tresor = node.getRight().get(0).getLeft();	
+					switch(tresor) {
+					case DIAMOND:
+						this.myMap.addNode(nodeId, MapAttribute.DIAMOND);
+						if(!this.ListeTresor.contains(node))
+							this.ListeTresor.add(node);
+						break;
+					case GOLD:
+						this.myMap.addNode(nodeId, MapAttribute.GOLD);
+						if(!this.ListeTresor.contains(node))
+							this.ListeTresor.add(node);
+						break;
+					}
+					}
+					catch(Exception e) {
+						
+					}
 				}
 			}
 
-			//3) while openNodes is not empty, continues.
 			if (this.openNodes.isEmpty()){
-				//Explo finished
+				System.out.println( ((AbstractDedaleAgent)this.myAgent).getLocalName()+ "Exploration successufully done, behaviour removed.");
 				finished=true;
 				exitValue = 3;
 
-				System.out.println("Exploration successufully done, behaviour removed.");
+			}
+			else{
 
-			}else{
-				//4) select next move.
-				//4.1 If there exist one open node directly reachable, go for it,
-				//	 otherwise choose one from the openNode list, compute the shortestPath and go for it
 				if (nextNode==null){
-					//no directly accessible openNode
-					//chose one, compute the path and take the first step.
 					int best_size = 9999;
 					int best_i = 0;
+					
 					for(int i = 0; i < this.openNodes.size(); i++)
 					{
 					int current_size = (this.myMap.getShortestPath(myPosition, this.openNodes.get(i))).size();
+					
 					if( current_size < best_size) {
 							best_i = i;
 							best_size = current_size;
 							}
-					
+				
 					}
 					
 				    nextNode=this.myMap.getShortestPath(myPosition, this.openNodes.get(best_i)).get(0);
-
 					
 				}
 				
-					
-
-
 				if(!((AbstractDedaleAgent)this.myAgent).moveTo(nextNode)) {
 					exitValue = 2;
 					finished = true;
@@ -158,15 +142,17 @@ public class ExploDuoBehaviour extends SimpleBehaviour {
 				}
 
 			}
-		/*System.out.println("Exploration successufully done, behaviour removed.");
-*/
 			}
-		}catch(Exception e){
+		}
+		catch(Exception e){
 			e.printStackTrace();
 		}
 		finished = true;
 			}
-	public int onEnd(){return exitValue;}
+	public int onEnd(){
+		((explot_collect_agent) this.myAgent).setMap(this.myMap);
+		((explot_collect_agent) this.myAgent).setListTresor(this.ListeTresor);
+		return exitValue;}
 	
 
 	@Override

@@ -10,7 +10,7 @@ public class EndProcess extends SimpleBehaviour {
 	public void action() {
 		// TODO Auto-generated method stub
 		
-		System.out.println("Exploration finished.");
+		System.out.println("_____Exploration finished._____________________________________________________________");
 		finished = true;
 	}
 

@@ -1,8 +1,8 @@
 mapname:MultiTypesV2
-gold:82:95
-gold:96:24
-gold:42:60
-gold:66:46
-gold:112:10
-diamonds:14:24
-diamonds:19:41
+gold:82:95:0:0
+gold:96:24:1:2
+gold:42:60:1:1
+gold:66:46:2:0
+gold:112:10:2:3
+diamonds:14:24:0:0
+diamonds:19:41:1:0

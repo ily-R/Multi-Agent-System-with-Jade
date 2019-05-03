@@ -23,7 +23,7 @@ public final class ConfigurationFile {
 	public static String PLATFORM_ID="Ithaq";
 	public static Integer PLATFORM_PORT=8888;
 	
-	public static String LOCAL_CONTAINER_NAME=PLATFORM_ID+"_"+"container1";
+	public static String LOCAL_CONTAINER_NAME=PLATFORM_ID+"_"+"container1";//"PPTI-14-408-17";
 	public static String LOCAL_CONTAINER2_NAME=PLATFORM_ID+"_"+"container2";
 	public static String LOCAL_CONTAINER3_NAME=PLATFORM_ID+"_"+"container3";
 	public static String LOCAL_CONTAINER4_NAME=PLATFORM_ID+"_"+"container4";
@@ -73,7 +73,7 @@ public final class ConfigurationFile {
 	 */
 	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/map2018-entities";
 	public static String INSTANCE_CONFIGURATION_ENTITIES="resources/monoAgent-entities2";
-
+	//public static String INSTANCE_CONFIGURATION_ENTITIES="resources/migration";
 	
 	/************************************
 	 * 
@@ -98,6 +98,6 @@ public final class ConfigurationFile {
 	public static boolean ENVIRONMENTisGRID=true;
 	public static boolean ACTIVE_WELL=false;
 	public static boolean ACTIVE_GOLD=true;
-	public static boolean ACTIVE_DIAMOND=false;
+	public static boolean ACTIVE_DIAMOND=true;
 	
 }

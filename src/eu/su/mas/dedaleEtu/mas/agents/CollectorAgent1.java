@@ -1,9 +1,6 @@
 package eu.su.mas.dedaleEtu.mas.agents;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
@@ -11,26 +8,41 @@ import eu.su.mas.dedaleEtu.mas.behaviours.EndProcess;
 import eu.su.mas.dedaleEtu.mas.behaviours.ExploDuoBehaviour;
 import eu.su.mas.dedaleEtu.mas.behaviours.FindTanker;
 import eu.su.mas.dedaleEtu.mas.behaviours.GoToGoalCollect;
+import eu.su.mas.dedaleEtu.mas.behaviours.ReceiveAllReady;
 import eu.su.mas.dedaleEtu.mas.behaviours.ReceiveBlock;
-import eu.su.mas.dedaleEtu.mas.behaviours.ReceiveDone;
-import eu.su.mas.dedaleEtu.mas.behaviours.SendMap;
-import eu.su.mas.dedaleEtu.mas.behaviours.SendReady;
 import eu.su.mas.dedaleEtu.mas.behaviours.ReceiveMap;
 import eu.su.mas.dedaleEtu.mas.behaviours.SayImBlock_1;
 import eu.su.mas.dedaleEtu.mas.behaviours.SayImBlock_2;
+import eu.su.mas.dedaleEtu.mas.behaviours.SendMap;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
+import dataStructures.tuple.Couple;
+
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.FSMBehaviour;
+import jade.core.behaviours.TickerBehaviour;
 
+/**
+ * This dummy collector moves randomly, tries all its methods at each time step, store the treasure that match is treasureType 
+ * in its backpack and intends to empty its backPack in the Tanker agent. @see {@link RandomWalkExchangeBehaviour}
+ * 
+ * @author hc
+ *
+ */
+public class CollectorAgent1 extends AbstractDedaleAgent implements explot_collect_agent{
 
-
-public class exploreAgent1 extends AbstractDedaleAgent implements explot_collect_agent {
-
-	private static final long serialVersionUID = -6431752665590433727L;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1784844593772918359L;
 	private MapRepresentation myMap;
 	private List<Couple<String,List<Couple<Observation,Integer>>>> ListeTresor;
 	private String TankerPosition;
-	private String objPosition;
 	
 	private  static  final  String exploration = "exploration";
 	private  static  final  String sendMap = "send_map";
@@ -40,8 +52,8 @@ public class exploreAgent1 extends AbstractDedaleAgent implements explot_collect
 	private static final String receiveBlock = "receive_block";
 	private static final String findTanker = "find_tanker";
 	private static final String gotocible = "Go_To_cible";
-	private static final String sendready = "send_Ready";
-	private static final String receiveddone = "received_done";
+	private static final String receivedallready = "Received_All_Ready";
+
 	
 
 	private  static  final  String fin = "fin";
@@ -65,9 +77,10 @@ public class exploreAgent1 extends AbstractDedaleAgent implements explot_collect
 		fsm.registerState(new SayImBlock_2(this),sendBlock2 );
 		fsm.registerState(new ReceiveBlock(this), receiveBlock);
 		fsm.registerState(new FindTanker(this), findTanker);
-		fsm.registerState(new GoToGoalCollect(this, myMap, objPosition),gotocible);
-		fsm.registerState(new SendReady(this), sendready);
-		fsm.registerState(new ReceiveDone(this), receiveddone);
+		fsm.registerState(new GoToGoalCollect(this, myMap, TankerPosition), gotocible);
+		fsm.registerState(new ReceiveAllReady(this, null), receivedallready);// le null devrait etre rempolacé par la liste des agents qui partent en missiion avec lui
+
+
 		fsm.registerLastState(new EndProcess(), fin);
 		
 		fsm.registerDefaultTransition (exploration,sendMap);
@@ -82,12 +95,13 @@ public class exploreAgent1 extends AbstractDedaleAgent implements explot_collect
 		fsm.registerTransition(receiveBlock,findTanker, 2);
 		fsm.registerDefaultTransition(findTanker, findTanker);
 		fsm.registerTransition(findTanker, fin, 3);
-
+		
 		fsm.registerDefaultTransition(gotocible,gotocible);
-		fsm.registerTransition(gotocible, sendready, 3);
-		fsm.registerTransition(sendready,receiveddone, 3);
-		fsm.registerDefaultTransition(receiveddone, receiveddone);
-		fsm.registerTransition(receiveddone, findTanker,3);
+		fsm.registerTransition(gotocible, receivedallready, 3);
+		fsm.registerDefaultTransition(receivedallready, findTanker);
+	
+
+
 		
 		lb.add(fsm);
 		addBehaviour(new startMyBehaviours(this,lb));
@@ -197,6 +211,5 @@ public class exploreAgent1 extends AbstractDedaleAgent implements explot_collect
 		return null;
 	}
 
-	
-	
 }
+	
