@@ -8,14 +8,14 @@ import java.util.Set;
 import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
-import eu.su.mas.dedaleEtu.mas.agents.explot_collect_agent;
+import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation.MapAttribute;
 import jade.core.behaviours.SimpleBehaviour;
 
 
 
-public class ExploDuoBehaviour extends SimpleBehaviour {
+public class MapExploration extends SimpleBehaviour {
 
 	private static final long serialVersionUID = 8567689731496787661L;
 
@@ -27,10 +27,9 @@ public class ExploDuoBehaviour extends SimpleBehaviour {
 	private int exitValue;
 
 
-	public ExploDuoBehaviour(final AbstractDedaleAgent myagent) {
+	public MapExploration(final AbstractDedaleAgent myagent) {
 		super(myagent);
-		this.myMap=  ((explot_collect_agent) this.myAgent).getMap();
-		this.ListeTresor = ((explot_collect_agent) this.myAgent).getListTresor();
+
 		this.openNodes=new ArrayList<String>();
 		this.closedNodes=new HashSet<String>();
 	}
@@ -40,7 +39,9 @@ public class ExploDuoBehaviour extends SimpleBehaviour {
 	@Override
 	public void action() {
 		exitValue = 1 ;
-
+		this.myMap=  ((AgentInterface) this.myAgent).getMap();
+		this.ListeTresor = ((AgentInterface) this.myAgent).getListTresor();
+		
 		if(this.myMap==null)
 			this.myMap= new MapRepresentation();
 		
@@ -109,7 +110,7 @@ public class ExploDuoBehaviour extends SimpleBehaviour {
 			}
 
 			if (this.openNodes.isEmpty()){
-				System.out.println( ((AbstractDedaleAgent)this.myAgent).getLocalName()+ "Exploration successufully done, behaviour removed.");
+				System.out.println( ((AbstractDedaleAgent)this.myAgent).getLocalName()+ " : Exploration successufully done.");
 				finished=true;
 				exitValue = 3;
 
@@ -150,8 +151,8 @@ public class ExploDuoBehaviour extends SimpleBehaviour {
 		finished = true;
 			}
 	public int onEnd(){
-		((explot_collect_agent) this.myAgent).setMap(this.myMap);
-		((explot_collect_agent) this.myAgent).setListTresor(this.ListeTresor);
+		((AgentInterface) this.myAgent).setMap(this.myMap);
+		((AgentInterface) this.myAgent).setListTresor(this.ListeTresor);
 		return exitValue;}
 	
 

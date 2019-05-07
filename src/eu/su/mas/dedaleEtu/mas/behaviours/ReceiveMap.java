@@ -8,7 +8,7 @@ import java.util.Map;
 
 import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
-import eu.su.mas.dedaleEtu.mas.agents.explot_collect_agent;
+import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation.MapAttribute;
 import jade.core.Agent;
@@ -26,23 +26,25 @@ public class ReceiveMap extends SimpleBehaviour{
 	private Map<String[], LinkedList<String>> sgSender ;
 	private  MapRepresentation mapReceiver;
 	private boolean finished = false;
-	private int exitValue = 1 ;
+	private int exitValue;
 	private List<Couple<String,List<Couple<Observation,Integer>>>> ListeTresor;
 	private List<Couple<String,List<Couple<Observation,Integer>>>> ListeTresor_received;
-	private String posTank;
+	private String tankerPosition;
 
 	public ReceiveMap (final Agent myagent) {
 		super(myagent);
-		this.mapReceiver = ((explot_collect_agent) this.myAgent).getMap();
-		this.ListeTresor = ((explot_collect_agent) this.myAgent).getListTresor();
+
 		this.ListeTresor_received = new ArrayList<Couple<String,List<Couple<Observation,Integer>>>>();
-		this.posTank = ((explot_collect_agent) this.myAgent).getTankerPosition();
+		this.tankerPosition = new String();
+		
 	}
 
 	@Override
 	public void action() {
-
 		
+		exitValue = 1 ;
+		this.mapReceiver = ((AgentInterface) this.myAgent).getMap();
+		this.ListeTresor = ((AgentInterface) this.myAgent).getListTresor();
 		final MessageTemplate msgTemplate_map = MessageTemplate.and(
 				MessageTemplate.MatchProtocol("map_protocol"),
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );		
@@ -93,7 +95,7 @@ public class ReceiveMap extends SimpleBehaviour{
 					this.mapReceiver.addEdge(key[0],this.sgSender.get(key).get(i));
 				}
 			}
-			((explot_collect_agent) this.myAgent).setMap(this.mapReceiver);
+			((AgentInterface) this.myAgent).setMap(this.mapReceiver);
 
 
 		}
@@ -113,7 +115,7 @@ public class ReceiveMap extends SimpleBehaviour{
 					if(!flag)
 						this.ListeTresor.add(tresor_node_received);
 				}
-				((explot_collect_agent) this.myAgent).setListTresor(this.ListeTresor);
+				((AgentInterface) this.myAgent).setListTresor(this.ListeTresor);
 
 			} catch (UnreadableException e) {
 				e.printStackTrace();
@@ -127,19 +129,18 @@ public class ReceiveMap extends SimpleBehaviour{
 		final ACLMessage msg_tankerPosition = this.myAgent.receive(msgTemplate_tankerPosition);
 		
 		if (msg_tankerPosition != null) {
-			this.posTank = msg_tankerPosition.getContent();
+			this.tankerPosition = msg_tankerPosition.getContent();
 			boolean flag = true;
 			  try
 			   {
-			      Integer.parseInt( this.posTank );
+			      Integer.parseInt( this.tankerPosition );
 			   }
 			   catch(NumberFormatException e )
 			   {
 				   flag = false ;			  
 				   }
 			if(flag)
-				((explot_collect_agent) this.myAgent).setTankerPosition(this.posTank);
-			System.out.println("____________tankPos received "+ this.posTank);
+				((AgentInterface) this.myAgent).setTankerPosition(this.tankerPosition);
 
 		}
 		

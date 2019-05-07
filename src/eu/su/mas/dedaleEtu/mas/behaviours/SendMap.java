@@ -8,7 +8,7 @@ import dataStructures.tuple.Couple;
 import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
-import eu.su.mas.dedaleEtu.mas.agents.explot_collect_agent;
+import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import jade.core.AID;
 import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
@@ -21,21 +21,22 @@ public class SendMap extends SimpleBehaviour{
 
 	private  MapRepresentation myMap;
 	private boolean finished = false;
-	private int exitValue = 1 ;
+	private int exitValue;
 	private List<Couple<String,List<Couple<Observation,Integer>>>> ListeTresor;
-	private String[] listePrio = {"Explo1","Explo2", "Explo3","Collect1","Collect2","Collect3","Tanker1"};
-	private String tankPos ;
+	private String[] listePrio = {"Explo1","Explo2","Collect1","Collect2","Collect3","Tanker1"};
+	private String tankerPosition ;
 
 	public SendMap (final Agent myagent){
 		super(myagent);
-		this.myMap= ((explot_collect_agent) this.myAgent).getMap();
-		this.ListeTresor = ((explot_collect_agent) this.myAgent).getListTresor();
-		this.tankPos = ((explot_collect_agent) this.myAgent).getTankerPosition();
+
 	}
 
 	@Override
 	public void action() {
-
+		exitValue = 1 ;
+		this.myMap= ((AgentInterface) this.myAgent).getMap();
+		this.ListeTresor = ((AgentInterface) this.myAgent).getListTresor();
+		this.tankerPosition = ((AgentInterface) this.myAgent).getTankerPosition();
 		
 		ACLMessage msg_map=new ACLMessage(ACLMessage.INFORM);
 		msg_map.setSender(this.myAgent.getAID());
@@ -71,7 +72,10 @@ public class SendMap extends SimpleBehaviour{
 		{
 			if(!(this.myAgent.getLocalName()).equals(agent))
 			{
-				msg_map.addReceiver(new AID(agent,AID.ISLOCALNAME));
+				if(!("Tanker1").equals(agent)) 
+				{
+					msg_tresorList.addReceiver(new AID(agent,AID.ISLOCALNAME));
+					}
 				msg_tresorList.addReceiver(new AID(agent,AID.ISLOCALNAME));
 				msg_tankerPosition.addReceiver(new AID(agent,AID.ISLOCALNAME));
 			}	
@@ -81,11 +85,11 @@ public class SendMap extends SimpleBehaviour{
 
 		}	
 		
-		if(this.tankPos != null) {
+		if(this.tankerPosition != null) {
 			boolean flag = true;
 			  try
 			   {
-			      Integer.parseInt( this.tankPos );
+			      Integer.parseInt( this.tankerPosition );
 			   }
 			   catch(NumberFormatException e )
 			   {
@@ -93,15 +97,14 @@ public class SendMap extends SimpleBehaviour{
 				   }
 			if(flag)
 			{	
-				msg_tankerPosition.setContent(this.tankPos);
+				msg_tankerPosition.setContent(this.tankerPosition);
 				((AbstractDedaleAgent)this.myAgent).sendMessage(msg_tankerPosition);
-				System.out.println( "________tankerpos sent"+this.tankPos);
 			}
 		}
 		((AbstractDedaleAgent)this.myAgent).sendMessage(msg_map);
 
 		}else {
-			System.out.println("null before sending");
+			System.out.println("map_null before sending");
 		}
 		finished = true;
 	}

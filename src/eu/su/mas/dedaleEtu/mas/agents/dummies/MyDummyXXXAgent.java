@@ -6,9 +6,8 @@ import java.util.List;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedale.mas.agent.behaviours.startMyBehaviours;
 
-import eu.su.mas.dedaleEtu.mas.behaviours.RandomWalkBehaviour;
-import eu.su.mas.dedaleEtu.mas.behaviours.SayHello;
-import eu.su.mas.dedaleEtu.mas.behaviours.migrate;
+import eu.su.mas.dedaleEtu.mas.behaviours.RandomWalk;
+import eu.su.mas.dedaleEtu.mas.behaviours.Migration;
 import jade.core.behaviours.Behaviour;
 
 
@@ -25,7 +24,7 @@ public class MyDummyXXXAgent extends AbstractDedaleAgent{
 		List<Behaviour> lb=new ArrayList<Behaviour>();
 		
 		//lb.add();
-		addBehaviour(new migrate(this));
+		addBehaviour(new Migration(this));
 		//addBehaviour(new startMyBehaviours(this,lb));
 	}
 

@@ -18,7 +18,7 @@ import jade.core.behaviours.TickerBehaviour;
  **************************************/
 
 
-public class RandomWalkBehaviour extends TickerBehaviour{
+public class RandomWalk extends TickerBehaviour{
 	
 	/**
 	 * When an agent choose to move
@@ -26,7 +26,7 @@ public class RandomWalkBehaviour extends TickerBehaviour{
 	 */
 	private static final long serialVersionUID = 9088209402507795289L;
 
-	public RandomWalkBehaviour (final AbstractDedaleAgent myagent) {
+	public RandomWalk (final AbstractDedaleAgent myagent) {
 		super(myagent, 600);
 	}
 

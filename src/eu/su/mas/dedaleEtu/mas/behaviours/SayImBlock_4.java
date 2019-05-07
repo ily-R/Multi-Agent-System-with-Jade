@@ -7,27 +7,25 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 
 
-public class SayImBlock_1 extends SimpleBehaviour{
+public class SayImBlock_4 extends SimpleBehaviour{
 
 	private static final long serialVersionUID = -2055554622078521998L;
 	
-	private int exitValue;
+	private int exitValue = 1 ;
 	private boolean finished = false;
-	private String[] listePrio = {"Explo1","Explo2","Collect1","Collect2","Collect3","Tanker1"};
+	private String[] listePrio = {"Explo1","Explo2", "Explo3","Collect1","Collect2","Collect3","Tanker1"};
 
-	public SayImBlock_1 (final Agent myagent) {
+	public SayImBlock_4 (final Agent myagent) {
 		super(myagent);
 	}
 
 	@Override
 	public void action() {
-		
-		exitValue = 1 ;
 		String myPosition=((AbstractDedaleAgent)this.myAgent).getCurrentPosition();
 
 		ACLMessage msg=new ACLMessage(ACLMessage.INFORM);
 		msg.setSender(this.myAgent.getAID());
-		msg.setProtocol("BlockProtocol_1");
+		msg.setProtocol("BlockProtocol_4");
 		
 		if (myPosition!=""){
 			msg.setContent(this.myAgent.getName()+" ; "+myPosition);
@@ -45,9 +43,7 @@ public class SayImBlock_1 extends SimpleBehaviour{
 		}
 		finished = true;
 	}
-	public int onEnd()
-	{return exitValue;
-	}
+	public int onEnd(){return exitValue;}
 	@Override
 	public boolean done() {
 		return finished;

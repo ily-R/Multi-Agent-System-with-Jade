@@ -1,0 +1,8 @@
+mapname:map2019Exam1
+agentTanker:Silo:1:94:500:500:0:0:5
+agentExplo:Explo1:4:2:0:0:0:2:0
+agentExplo:Explo2:4:50:0:0:0:0:2
+agentCollect:Collect1:3:80:57:0:0:1:1
+agentCollect:Collect2:3:62:13:0:0:2:1
+agentCollect:Collect3:3:96:9:0:0:1:2
+wumpus:Golem:0:7:80:0:1:4:4

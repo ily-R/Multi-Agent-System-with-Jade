@@ -7,12 +7,12 @@ import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.core.behaviours.TickerBehaviour;
 
-public class migrate extends SimpleBehaviour {
+public class Migration extends SimpleBehaviour {
 
 	private static final long serialVersionUID = -7687876987L;
 	private boolean finished = false;
 	
-	public migrate(final Agent myAgent) {
+	public Migration(final Agent myAgent) {
 		super(myAgent);
 	}
 

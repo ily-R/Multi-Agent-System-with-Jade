@@ -18,15 +18,25 @@ public class ReceiveBlock extends SimpleBehaviour{
 	private String envoyeur = "";
 	private boolean finished = false;
 	private int exitValue;
-	private String[] listePrio = {"Explo1","Explo2", "Explo3","Collect1","Collect2","Collect3","Tanker1"};
 	
 	public ReceiveBlock (final Agent myagent) {
 		super(myagent);
-
 	}
-
+	public void randomWalk(int iterations)
+	{
+		int i = 0;
+		while(i<iterations) {
+		List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
+		Random rand = new Random(); 
+		int posAleat = rand.nextInt(lobs.size());
+		String nextNode = lobs.get(posAleat).getLeft();
+		((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
+		i++;
+		}
+	}
 	@Override
 	public void action() {
+		exitValue = 1;
 		
 		final MessageTemplate msgTemplate_1 = MessageTemplate.and(
 				MessageTemplate.MatchProtocol("BlockProtocol_1"),
@@ -37,8 +47,19 @@ public class ReceiveBlock extends SimpleBehaviour{
 				MessageTemplate.MatchProtocol("BlockProtocol_2"),
 				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );
 		final ACLMessage msg_2 = this.myAgent.receive(msgTemplate_2);
+		
+		final MessageTemplate msgTemplate_3 = MessageTemplate.and(
+				MessageTemplate.MatchProtocol("BlockProtocol_3"),
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );
+		final ACLMessage msg_3= this.myAgent.receive(msgTemplate_3);
+		
+		final MessageTemplate msgTemplate_4 = MessageTemplate.and(
+				MessageTemplate.MatchProtocol("BlockProtocol_4"),
+				MessageTemplate.MatchPerformative(ACLMessage.INFORM) );
+		final ACLMessage msg_4 = this.myAgent.receive(msgTemplate_4);
+		
 
-		if (msg_1 != null) {	
+		 if (msg_1 != null) {	
 			
 			try {
 				this.envoyeur = msg_1.getSender().getLocalName();
@@ -46,71 +67,27 @@ public class ReceiveBlock extends SimpleBehaviour{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				
-			if((this.envoyeur).equals("Explo1")) {
-				int i = 0;
-				while(i<5) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
+			switch(this.envoyeur) {
+			case "Explo1":
+				this.randomWalk(3);
+				break;
+			case "Explo2":
+				this.randomWalk(3);
+				break;
+			case "Collect1":
+				this.randomWalk(5);
+				break;
+			case "Collect2":
+				this.randomWalk(5);
+				break;
+			case "Collect3":
+				this.randomWalk(5);
+				break;
+			default:
+				break;
 			}
-			else if((this.envoyeur).equals("Explo2")) {
-				int i = 0;
-				while(i<7) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
 			}
-			else if((this.envoyeur).equals("Explo3")) {
-				int i = 0;
-				while(i<10) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Collect1")) {
-				int i = 0;
-				while(i<3) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Collect2")) {
-				int i = 0;
-				while(i<3) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			exitValue = 1;
-			}
-
-		if (msg_2 != null) {	
+		else if (msg_2 != null) {	
 			
 			try {
 				this.envoyeur = msg_2.getSender().getLocalName();
@@ -118,69 +95,89 @@ public class ReceiveBlock extends SimpleBehaviour{
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-				
-			if((this.envoyeur).equals("Explo1")) {
-				int i = 0;
-				while(i<5) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Explo2")) {
-				int i = 0;
-				while(i<7) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Explo3")) {
-				int i = 0;
-				while(i<10) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Collect1")) {
-				int i = 0;
-				while(i<3) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
-			}
-			else if((this.envoyeur).equals("Collect2")) {
-				int i = 0;
-				while(i<3) {
-				List<Couple<String,List<Couple<Observation,Integer>>>> lobs=((AbstractDedaleAgent)this.myAgent).observe();
-				Random rand = new Random(); 
-				int posAleat = rand.nextInt(lobs.size());
-				String nextNode = lobs.get(posAleat).getLeft();
-				((AbstractDedaleAgent)this.myAgent).moveTo(nextNode);
-				i++;
-				}
-
+			switch(this.envoyeur) {
+			case "Explo1":
+				this.randomWalk(3);
+				break;
+			case "Explo2":
+				this.randomWalk(3);
+				break;
+			case "Collect1":
+				this.randomWalk(5);
+				break;
+			case "Collect2":
+				this.randomWalk(5);
+				break;
+			case "Collect3":
+				this.randomWalk(5);
+				break;
+			default:
+				break;
 			}
 			exitValue = 2;
+			finished = true;
 			}
+		else if (msg_3 != null) {	
+			
+			try {
+				this.envoyeur = msg_3.getSender().getLocalName();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			switch(this.envoyeur) {
+			case "Explo1":
+				this.randomWalk(3);
+				break;
+			case "Explo2":
+				this.randomWalk(3);
+				break;
+			case "Collect1":
+				this.randomWalk(5);
+				break;
+			case "Collect2":
+				this.randomWalk(5);
+				break;
+			case "Collect3":
+				this.randomWalk(5);
+				break;
+			default:
+				break;
+			}
+			exitValue = 3;
+			finished = true;
+			}
+		else if (msg_4 != null) {	
+			
+			try {
+				this.envoyeur = msg_4.getSender().getLocalName();
+				
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			switch(this.envoyeur) {
+			case "Explo1":
+				this.randomWalk(3);
+				break;
+			case "Explo2":
+				this.randomWalk(3);
+				break;
+			case "Collect1":
+				this.randomWalk(5);
+				break;
+			case "Collect2":
+				this.randomWalk(5);
+				break;
+			case "Collect3":
+				this.randomWalk(5);
+				break;
+			default:
+				break;
+			}
+			exitValue = 4;
+			finished = true;
+			}
+		
 		finished = true;
 
 		}	
