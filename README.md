@@ -53,6 +53,7 @@ Here's how an agent (either collector or explorer) grows his map information by:
 
 
 
+
 #### To test other maps or add agents:
 * Go to `ConfigurationFile.java` and change:
 
