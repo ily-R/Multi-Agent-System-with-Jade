@@ -18,7 +18,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class ReceiveInfo extends SimpleBehaviour{
 
 	private static final long serialVersionUID = -2058134622078551998L;

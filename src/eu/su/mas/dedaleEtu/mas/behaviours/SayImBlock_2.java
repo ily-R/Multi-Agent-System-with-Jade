@@ -6,7 +6,11 @@ import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class SayImBlock_2 extends SimpleBehaviour{
 
 	private static final long serialVersionUID = -2055554622074521998L;

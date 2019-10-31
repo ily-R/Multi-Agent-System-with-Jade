@@ -13,6 +13,11 @@ import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import jade.core.AID;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 
 
 

@@ -6,6 +6,11 @@ import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class EndProcess extends SimpleBehaviour {
 	private boolean finished = false;
 	private String[] listePrio = {"Explo1","Explo2","Collect1","Collect2","Collect3"};

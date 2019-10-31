@@ -26,7 +26,11 @@ import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
 import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.FSMBehaviour;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 
 public class CollectAgent extends AbstractDedaleAgent implements AgentInterface {
 

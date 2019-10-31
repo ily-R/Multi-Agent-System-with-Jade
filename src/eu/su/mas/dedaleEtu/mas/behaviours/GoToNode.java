@@ -7,6 +7,11 @@ import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation;
 import jade.core.behaviours.SimpleBehaviour;
 
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 
 
 public class GoToNode extends SimpleBehaviour {

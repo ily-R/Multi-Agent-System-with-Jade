@@ -17,7 +17,11 @@ import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 import jade.lang.acl.UnreadableException;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class ReceiveMap extends SimpleBehaviour{
 
 

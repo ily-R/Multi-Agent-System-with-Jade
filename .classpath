@@ -18,6 +18,6 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="libs/delta/delta-mas.jar"/>
 	<classpathentry kind="lib" path="libs/junit/junit-4.12.jar"/>
-	<classpathentry kind="lib" path="C:/Users/ilyas/eclipse-workspace/Multi-Agent-System-with-Jade_-FOSYMA/libs/dedale/dedale.jar"/>
+	<classpathentry kind="lib" path="C:/Users/ilyas/Desktop/github_cleaning/Multi-Agent-System-with-Jade/libs/dedale/dedale.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

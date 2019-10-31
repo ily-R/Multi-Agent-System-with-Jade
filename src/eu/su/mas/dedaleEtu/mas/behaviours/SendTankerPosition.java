@@ -7,7 +7,11 @@ import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class SendTankerPosition extends SimpleBehaviour{
 
 

@@ -22,7 +22,11 @@ import jade.lang.acl.ACLMessage;
 
 import eu.su.mas.dedaleEtu.mas.agents.TankerAgent;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class DecisionMaking extends SimpleBehaviour{
 
 

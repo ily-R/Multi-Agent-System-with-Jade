@@ -8,6 +8,11 @@ import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import eu.su.mas.dedaleEtu.mas.agents.AgentInterface;
 import jade.core.behaviours.SimpleBehaviour;
 
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class RandomWalkTanker extends SimpleBehaviour{
 	
 	private static final long serialVersionUID = 9088209402507795289L;

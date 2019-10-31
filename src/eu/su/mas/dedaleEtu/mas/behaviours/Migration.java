@@ -6,7 +6,11 @@ import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.OneShotBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.core.behaviours.TickerBehaviour;
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class Migration extends SimpleBehaviour {
 
 	private static final long serialVersionUID = -7687876987L;

@@ -18,7 +18,11 @@ import jade.core.behaviours.Behaviour;
 import jade.core.behaviours.FSMBehaviour;
 import jade.core.behaviours.SimpleBehaviour;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 
 public class TankerAgent extends AbstractDedaleAgent implements AgentInterface{
 

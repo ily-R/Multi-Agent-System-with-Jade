@@ -12,7 +12,11 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class ReceiveMission extends SimpleBehaviour{
 
 

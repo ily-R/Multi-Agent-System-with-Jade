@@ -14,7 +14,11 @@ import eu.su.mas.dedaleEtu.mas.knowledge.MapRepresentation.MapAttribute;
 import jade.core.behaviours.SimpleBehaviour;
 
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class MapExploration extends SimpleBehaviour {
 
 	private static final long serialVersionUID = 8567689731496787661L;

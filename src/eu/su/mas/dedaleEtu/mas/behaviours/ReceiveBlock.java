@@ -10,7 +10,11 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class ReceiveBlock extends SimpleBehaviour{
 
 	private static final long serialVersionUID = -2058134622075555998L;

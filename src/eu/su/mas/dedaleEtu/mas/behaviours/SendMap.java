@@ -14,7 +14,11 @@ import jade.core.Agent;
 import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class SendMap extends SimpleBehaviour{
 
 	private static final long serialVersionUID = -2058134622078521998L;

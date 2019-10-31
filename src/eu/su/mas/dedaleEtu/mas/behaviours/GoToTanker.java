@@ -13,7 +13,11 @@ import jade.core.behaviours.SimpleBehaviour;
 import jade.lang.acl.ACLMessage;
 import jade.lang.acl.MessageTemplate;
 
-
+/**
+ * 
+ * @author ilyas Aroui
+ *
+ */
 public class GoToTanker extends SimpleBehaviour {
 
 	private static final long serialVersionUID = 8567689731496787661L;

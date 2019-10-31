@@ -9,13 +9,11 @@ import eu.su.mas.dedale.env.Observation;
 import eu.su.mas.dedale.mas.AbstractDedaleAgent;
 import jade.core.behaviours.TickerBehaviour;
 
-/**************************************
+/**
  * 
- * 
- * 				BEHAVIOUR RandomWalk : Illustrates how an agent can interact with, and move in, the environment
- * 
- * 
- **************************************/
+ * @author ilyas Aroui
+ *
+ */
 
 
 public class RandomWalk extends TickerBehaviour{
