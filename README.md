@@ -48,8 +48,9 @@ Here's how an agent (either collector or explorer) grows his map information by:
 
   <img width = 400 align="left" src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo1.gif?raw=true" alt="capture reconstruction">
 
-
   <img width = 400 align="right" src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo2.gif?raw=true" alt="capture reconstruction">
+
+
 
 
 #### To test other maps or add agents:
@@ -63,15 +64,15 @@ public static String INSTANCE_CONFIGURATION_ENTITIES
 
 To other folders that exisit in `DedaleEtuFull2018/resources`.
 Now you need to add all the agents that exisit in *INSTANCE_CONFIGURATION_ENTITIES* by modifying `Principal.java`.
-If I want to add a Collector that is named in the *INSTANCE_CONFIGURATION_ENTITIES* as Collect1, I add the following:
+If I want to add a Collector that is named in the *INSTANCE_CONFIGURATION_ENTITIES* as *Collect1*, I add the following:
 
 ```
-		c = containerList.get(ConfigurationFile.LOCAL_CONTAINER_NAME);
-		Assert.assertNotNull("This container does not exist",c);		
-		agentName="Collect1";
-		Object [] entityParametersC={"My parameters"};
-		ag=createNewDedaleAgent(c, agentName, CollectAgent.class.getName(), entityParametersC);
-		agentList.add(ag);
+c = containerList.get(ConfigurationFile.LOCAL_CONTAINER_NAME);
+Assert.assertNotNull("This container does not exist",c);		
+agentName="Collect1";
+Object [] entityParametersC={"My parameters"};
+ag=createNewDedaleAgent(c, agentName, CollectAgent.class.getName(), entityParametersC);
+agentList.add(ag);
 		
 ```
 ## Reference:
