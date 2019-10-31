@@ -1,1 +1,1 @@
-# Multi-Agent-System-with-Jade_-FOSYMA
+# Multi-Agent-System-with-Jade
