@@ -46,10 +46,11 @@ Here's how an agent (either collector or explorer) grows his map information by:
 * exploring the map.
 * receiving map's info stored in other agents that passe close by (within 3 edges).
 
-  <img width = 400 align="left" src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo1.gif?raw=true" alt="capture reconstruction">
 
-  <img width = 400 align="right" src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo2.gif?raw=true" alt="capture reconstruction"/>
-
+<img width = 400 align="left" src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo1.gif?raw=true" alt="capture reconstruction">	
+<p align="right">
+  <img width = 400 src="https://github.com/ily-R/Multi-Agent-System-with-Jade/blob/master/README_data/Explo2.gif?raw=true" alt="capture reconstruction"/>
+</p>
 
 #### To test other maps or add agents:
 
